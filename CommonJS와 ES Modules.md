@@ -13,27 +13,27 @@
 
 ### export
 
-```
+```js
 // test1.js
 
-function MSG1(){
+function MSG1() {
   console.log('1');
 }
-function MSG2(){
+function MSG2() {
   console.log('2');
 }
 
-export {MSG1, MSG2}
+export { MSG1, MSG2 };
 ```
 
 위 코드를 보면, test1.js에서 MSG1, MSG2의 함수를 export 한다. export는 다른 곳에서 쓸 수 있게 내보내 주는 것.
 
 export 키워드 뒤에는 내 보낼 함수 혹은 변수명을 {}괄호로 묶어줘서 보낸다. 이름을 꼭 맞춰주어야 한다.
 
-```
+```js
 // test2.js
 
-import {MSG1, MSG2} from './test1'
+import { MSG1, MSG2 } from './test1';
 
 MSG1(); // '1'
 ```
@@ -46,21 +46,20 @@ test2.js 파일에서 test1.js에서 내보냈던 함수 두개를 가져오는�
 
 ### export default
 
-```
+```js
 // test1.js
 
-function MSG1(){
+function MSG1() {
   console.log('1');
 }
 
-export default MSG1
+export default MSG1;
 ```
 
-```
+```js
 // test2.js
 
-import MSG3 from './test1'
+import MSG3 from './test1';
 
 MSG3(); // '1'
-
 ```

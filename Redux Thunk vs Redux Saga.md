@@ -28,7 +28,7 @@
 
 ### Thunk
 
-```
+```js
 const thunkExample = () => {
 	return async function (dispatch) => {
 		const items = await fetch("https://www.~~~~~")
@@ -44,7 +44,7 @@ const thunkExample = () => {
 
 thunk가 async하게 API콜도 하고, 그 후에, 최종적으로는 synchronous 한 action을 dispatch해주게 합니다.
 
-```
+```js
 {type: "ADD_STATE", payload: items.json()} //-> 요것이 액션!
 ```
 
@@ -53,22 +53,21 @@ thunk가 async하게 API콜도 하고, 그 후에, 최종적으로는 synchronou
 Saga 는 Thunk 와 마찬가지로 비동기적으로 함수를 처리할수있지만 generators 를 사용하는 차이가 있습니다.
 generators의 가장큰 장점은, 중간에 엑스큐션을 멈췄다가, 끝낼 수도 있고, 다시 시작할 수 도 있습니다. 실전에서 이게 왜 필요할까요? (실전에서 이 일들이 발생하는 사례 케이스는 다음에 한 번 만들어 보겠습니다)
 
-```
+```js
 function* someGeneratorFunction() {
-	yield('good')
-	yield('better')
+  yield 'good';
+  yield 'better';
 }
 
 let itr = someGeneratorFunction();
-console.log(itr.next()) // {value: "good", done: false}
-console.log(itr.next()) // {value: "better", done: false}
-console.log(itr.next()) // {value: undefined, done: true}
-
+console.log(itr.next()); // {value: "good", done: false}
+console.log(itr.next()); // {value: "better", done: false}
+console.log(itr.next()); // {value: undefined, done: true}
 ```
 
 저희가 saga를 generator를 직접 콜을 해서 .next()를 실행할 일은 없습니다. generator를 설명하고나 직접 실행했을때를 보여주는 용도로 작성된 코드 입니다
 
-```
+```js
 import {call, put, takeEvery, all,} from 'redux-saga/effect';
 import Api from '...' //<-- 여기는 각자마다 경로가 다르겠죠!
 

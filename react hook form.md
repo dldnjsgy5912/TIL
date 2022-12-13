@@ -2,7 +2,7 @@
 React 및 Next 환경에서의 인풋을 컨트롤 하는 경우는 보통 useState 를 사용해서 컨트롤 하는것이 일반적일것입니다.
 그리고 많은 사람들이 Mui 를 사용하여 인풋값을 관리하고있죠.
 
-```
+```ts
   const LoginPage = () => {
 
   		const [email, setEmail] = useState("");
@@ -57,7 +57,7 @@ React 및 Next 환경에서의 인풋을 컨트롤 하는 경우는 보통 useSt
 그럼 인풋이 10개면 10개를 만들어야 하는 상황이 올수있습니다.
 이런 방식은 비효율적이고 코드를 더럽게 만들기 때문에 고민하던중 사용하기 좋은 라이브러리를 발견하였습니다.
 
-```
+```js
   import { Controller, useForm } from "react-hook-form";
 
   const LoginPage = () => {
