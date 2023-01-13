@@ -1,0 +1,47 @@
+# React Query 사용 이유
+react-query를 사용함으로 서버, 클라이언트 데이터를 분리할수있었고 캐싱 기능을 통해 효율적엔 api 호출 가능했기 때문
+
+## 장점
+
+- 캐싱
+- get을 한 데이터에 대해 update를 하면 자동으로 get을 다시 수행한다. (예를 들면 게시판의 글을 가져왔을 때 게시판의 글을 생성하면 게시판 글을 get하는 api를 자동으로 실행 )
+- 데이터가 오래 되었다고 판단되면 다시 get (invalidateQueries)
+- 동일 데이터 여러번 요청하면 한번만 요청한다. (옵션에 따라 중복 호출 허용 시간 조절 가능)
+- 무한 스크롤 (Infinite Queries (opens new window))
+- 비동기 과정을 선언적으로 관리할 수 있다.
+- react hook과 사용하는 구조가 비슷하다.
+
+
+# React-Query 가 데이터를 Refetching 해오는 상황은 ?
+
+React-Query 는 기본적으로 데이터를 fetching 해온 후 데이터를 캐싱 하게 되며, 해당 데이터가 stale 하다고 판단될 때 데이터를 refetching 해오게 됩니다.
+
+- 브라우저에 포커스가 들어왔을 경우 (refetchOnWindowFocus)
+- 새로 마운트가 되었을 경우 (refetchOnMount)
+- 네트워크가 끊어졌다가 다시 연결된 경우 (refetchOnReconnect)
+- React-Query 는 캐싱 된 데이터는 항상 stale 하다고 판단하며, stale 상태인 데이터를 Refetching (staleTime 으로 설정 가능)
+
+staleTime은 최소 20초 정도면 중복 호출 문제를 해결할 수 있다고 말한다.
+
+# staleTime
+기본 값
+
+defaultValue : 0
+- 데이터가 fresh -> stale 상태로 변경되는데 걸리는 시간
+- fresh 상태일때는 쿼리 인스턴스가 새롭게 mount 되어도 네트워크 fetch가 일어나지 않는다.
+- 데이터가 한번 fetch 되고 나서 staleTime이 지나지 않았다면 unmount 후 mount 되어도 fetch가 일어나지 않는다.
+## staleTime 주의점
+#### 1.staletime을 지정해주지 않고 쓴다면 react-query의 캐싱 기능을 제대로 활용할 수가 없다.
+
+
+#### 2.enabled을 설정하여 retry 호출을 막자
+#### 3. 진짜 진짜 중요한 refetch 함수의 개념
+# cacheTime
+기본 값
+
+defaultValue : 5분
+- 데이터가 비활성 상태일 때 캐싱된 상태로 남아있는 시간
+- 쿼리 인스턴스가 unmount 되면 데이터는 비활성 상태로 변경되며, 캐시는 cacheTime만큼 유지된다.
+- cacheTime이 지나면 가비지 콜렉터로 수집된다.
+- cacheTime이 지나기 전에 쿼리 인스턴스가 다시 마운트 되면, 데이터를 fetch하는 동안 캐시 데이터를 보여준다.
+- cacheTime은 staleTime과 관계없이, 무조건 - 비활성 된 시점을 기준으로 캐시 데이터 삭제를 결정한다.
